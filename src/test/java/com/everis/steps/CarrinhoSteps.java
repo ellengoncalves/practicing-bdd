@@ -3,6 +3,7 @@ package com.everis.steps;
 import org.junit.Assert;
 
 import com.everis.pages.CarrinhoPage;
+import com.everis.pages.PagamentoPage;
 
 import io.cucumber.java.pt.Entao;
 
@@ -20,6 +21,13 @@ public class CarrinhoSteps {
 		CarrinhoPage carrinhoPage = new CarrinhoPage();
 		Assert.assertTrue("O produto [" + nomeProduto +"] deveria ter a quantidade ["+ quantidadeProduto +"]",
 				carrinhoPage.oProdutoApresentouQuantidadeEsperada(nomeProduto, quantidadeProduto));
+	}
+
+	@Entao("^deve ser apresentado a mensagem \"(.*)\"$")
+	public void deveSerApresentadoAMensagem(String mensagemEsperada) {
+		PagamentoPage pagamentoPage = new PagamentoPage();
+		Assert.assertTrue("Deveria ter apresentado a mensagem [" + mensagemEsperada + "]",
+				pagamentoPage.apresentouMensagem(mensagemEsperada));
 	}
 	
 }

@@ -2,11 +2,15 @@ package com.everis.pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import com.everis.util.Hooks;
 
 public class CarrinhoPage extends BasePage {
+
+	@FindBy(xpath = "//a[contains(@class,'check_out') and contains(., 'Proceed To Checkout')]")
+	protected WebElement botaoProceedCheckout;
 	
 	public CarrinhoPage() {
 		PageFactory.initElements(Hooks.getDriver(), this);
@@ -31,5 +35,10 @@ public class CarrinhoPage extends BasePage {
 		}
 		logFail("Nao apresentou a quantidade [" + quantidadeProdutoEsperada + "] do produto [" + nomeProduto + "] conforme esperado.");
 		return false;
+	}
+
+	public void acessarCheckout() {
+		waitElement(botaoProceedCheckout, 10).click();
+		log("Acessou o checkout");
 	}
 }

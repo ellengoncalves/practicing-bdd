@@ -14,7 +14,7 @@ Funcionalidade: Realizar Compra no E-commerce
     Quando adiciona o produto "Blue Top" ao carrinho
     Entao o produto "Blue Top" deve estar presente no carrinho
 
-  @test
+  #@test
   Cenário: Aumentar a quantidade de produto através da página de detalhes do produto
     Dado que um usuario acessa o site "https://automationexercise.com"
     E pesquisa pelo produto "Winter Top"
@@ -23,3 +23,15 @@ Funcionalidade: Realizar Compra no E-commerce
     Quando adiciona o produto ao carrinho pela pagina de detalhes
     Entao o produto "Winter Top" deve possuir a quantidade 2
     #Entao o produto "Winter Top" deve estar presente no carrinho
+
+  @test
+  Cenario: Realizar compra
+    Dado que um usuario acessa o site "https://automationexercise.com"
+    E pesquisa pelo produto "Stylish Dress"
+    E adiciona o produto "Stylish Dress" ao carrinho
+    E acessa o checkout
+    E realiza o login
+    E confirma o endereco de entrega
+    E escolhe a forma de transporte
+    Quando o pagamento for confirmado
+    Entao deve ser apresentado a mensagem "Your order has been placed successfully!"
