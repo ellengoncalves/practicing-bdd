@@ -9,22 +9,25 @@ import com.everis.util.Hooks;
 
 public class ResultadoPesquisaPage extends BasePage {
 
-	@FindBy(xpath = "//*[text()='Add to cart']")
-	protected WebElement botaoAdicionarAoCarrinho;
-	
-	@FindBy(css = "[title='Proceed to checkout']")
-	protected WebElement botaoProsseguir;
+	@FindBy(xpath = "//a[@href='/view_cart' and contains(., 'View Cart')]")
+	protected WebElement botaoVisualizarCarrinho;
 	
 	public ResultadoPesquisaPage() {
 		PageFactory.initElements(Hooks.getDriver(), this);
 	}
 
 	public void adicionarProdutoAoCarrinho(String nomeProduto) {
-		WebElement nomeProdutoTela = driver.findElement(By.xpath(".//*[@itemprop='name']/*[contains(text(), '" + nomeProduto + "')] | .//*[@itemprop='name'][text()='" + nomeProduto + "']"));
+		WebElement nomeProdutoTela = waitElement(By.xpath("//div[contains(@class,'productinfo')]//p[normalize-space()='" + nomeProduto + "']"), 10);
 		moveToElement(nomeProdutoTela);
-		botaoAdicionarAoCarrinho.click();
-		waitElement(botaoProsseguir, 10).click();
+		waitElement(By.xpath("//div[contains(@class,'productinfo')][.//p[normalize-space()='" + nomeProduto + "']]//a[contains(@class,'add-to-cart')]"), 10).click();
+		waitElement(botaoVisualizarCarrinho, 10).click();
 		log("Adicionou o produto [" + nomeProduto + "] ao carrinho");
 	}
 
+	public void acessarProduto(String nomeProduto) {
+		WebElement botaoVisualizarProduto = waitElement(By.xpath("//div[contains(@class,'product-image-wrapper')][.//p[normalize-space()='" + nomeProduto + "']]//a[contains(@href,'/product_details/')]"), 10);
+		String urlDetalheProduto = botaoVisualizarProduto.getAttribute("href");
+		driver.navigate().to(urlDetalheProduto);
+		log("Acessou o produto [" + nomeProduto + "]");
+	}
 }

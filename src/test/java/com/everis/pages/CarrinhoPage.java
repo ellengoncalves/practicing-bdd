@@ -1,6 +1,7 @@
 package com.everis.pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
 import com.everis.util.Hooks;
@@ -12,7 +13,7 @@ public class CarrinhoPage extends BasePage {
 	}
 	
 	public boolean apresentouProdutoEsperadoNoCarrinho(String nomeProduto) {
-		boolean apresentouProdutoEsperadoNoCarrinho = isElementDisplayed(By.xpath("//*[contains(@class,'cart_item')]//a[text()='" + nomeProduto + "']"));
+		boolean apresentouProdutoEsperadoNoCarrinho = isElementDisplayed(By.xpath("//tr[contains(@id,'product-')]//td[contains(@class,'cart_description')]//a[normalize-space()='" + nomeProduto + "']"));
 		if (apresentouProdutoEsperadoNoCarrinho) {
 			log("Apresentou o produto [" + nomeProduto + "] no carrinho conforme esperado.");
 			return true;
@@ -21,4 +22,14 @@ public class CarrinhoPage extends BasePage {
 		return false;
 	}
 
+	public boolean oProdutoApresentouQuantidadeEsperada(String nomeProduto, String quantidadeProdutoEsperada) {
+		WebElement quantidadeProduto = waitElement(By.xpath("//tr[contains(@id,'product-')][.//td[contains(@class,'cart_description')]//a[normalize-space()='" + nomeProduto + "']]//td[contains(@class,'cart_quantity')]//button"), 10);
+		boolean oProdutoApresentouQuantidadeEsperada = quantidadeProdutoEsperada.equals(quantidadeProduto.getText().trim());
+		if (oProdutoApresentouQuantidadeEsperada) {
+			log("Apresentou a quantidade [" + quantidadeProdutoEsperada + "] do produto [" + nomeProduto + "] conforme esperado.");
+			return true;
+		}
+		logFail("Nao apresentou a quantidade [" + quantidadeProdutoEsperada + "] do produto [" + nomeProduto + "] conforme esperado.");
+		return false;
+	}
 }
