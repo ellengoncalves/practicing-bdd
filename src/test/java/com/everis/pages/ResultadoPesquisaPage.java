@@ -17,9 +17,9 @@ public class ResultadoPesquisaPage extends BasePage {
 	}
 
 	public void adicionarProdutoAoCarrinho(String nomeProduto) {
-		WebElement nomeProdutoTela = waitElement(By.xpath("//div[contains(@class,'productinfo')]//p[normalize-space()='" + nomeProduto + "']"), 10);
-		moveToElement(nomeProdutoTela);
-		waitElement(By.xpath("//div[contains(@class,'productinfo')][.//p[normalize-space()='" + nomeProduto + "']]//a[contains(@class,'add-to-cart')]"), 10).click();
+		WebElement produto = waitElement(By.xpath("//div[contains(@class,'product-image-wrapper')][.//p[normalize-space()='" + nomeProduto + "']]"), 10);
+		moveToElement(produto);
+		waitElement(By.xpath("//div[contains(@class,'product-image-wrapper')][.//p[normalize-space()='" + nomeProduto + "']]//div[contains(@class,'productinfo')]//a[contains(@class,'add-to-cart')]"), 10).click();
 		waitElement(botaoVisualizarCarrinho, 10).click();
 		log("Adicionou o produto [" + nomeProduto + "] ao carrinho");
 	}

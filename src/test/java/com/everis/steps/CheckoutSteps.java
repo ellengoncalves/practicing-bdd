@@ -28,12 +28,6 @@ public class CheckoutSteps {
 		checkoutPage.confirmarEnderecoEntrega();
 	}
 
-	@E("^escolhe a forma de transporte$")
-	public void escolherFormaDeTransporte() {
-		CheckoutPage checkoutPage = new CheckoutPage();
-		checkoutPage.escolherFormaDeTransporte();
-	}
-
 	@Quando("^o pagamento for confirmado$")
 	public void confirmarPagamento() {
 		CheckoutPage checkoutPage = new CheckoutPage();

@@ -4,7 +4,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import com.everis.util.Config;
 import com.everis.util.Hooks;
+import com.everis.util.Urls;
 
 public class LoginPage extends BasePage {
 
@@ -23,12 +25,6 @@ public class LoginPage extends BasePage {
 	@FindBy(css = "button[data-qa='login-button']")
 	protected WebElement botaoLogin;
 
-	@FindBy(css = "a[href='/view_cart']")
-	protected WebElement linkCarrinho;
-
-	@FindBy(xpath = "//a[contains(@class,'check_out') and contains(., 'Proceed To Checkout')]")
-	protected WebElement botaoProceedCheckout;
-
 	public LoginPage() {
 		PageFactory.initElements(Hooks.getDriver(), this);
 	}
@@ -39,19 +35,11 @@ public class LoginPage extends BasePage {
 		waitElement(campoSenha, 10).sendKeys(obterConfiguracao("automationexercise.password", "AUTOMATION_EXERCISE_PASSWORD"));
 		waitElement(botaoLogin, 10).click();
 		waitElement(textoUsuarioLogado, 10);
-		waitElement(linkCarrinho, 10).click();
-		waitElement(botaoProceedCheckout, 10).click();
-		log("Realizou login e acessou novamente o checkout");
+		driver.navigate().to(Urls.CHECKOUT);
+		log("Realizou login e acessou o checkout");
 	}
 
 	private String obterConfiguracao(String propriedade, String variavelAmbiente) {
-		String valor = System.getProperty(propriedade);
-		if (valor == null || valor.trim().isEmpty()) {
-			valor = System.getenv(variavelAmbiente);
-		}
-		if (valor == null || valor.trim().isEmpty()) {
-			throw new IllegalStateException("Informe " + propriedade + " nas VM options ou a variavel de ambiente " + variavelAmbiente);
-		}
-		return valor;
+		return Config.obter(propriedade, variavelAmbiente);
 	}
 }

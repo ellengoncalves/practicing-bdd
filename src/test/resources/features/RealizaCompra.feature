@@ -32,6 +32,5 @@ Funcionalidade: Realizar Compra no E-commerce
     E acessa o checkout
     E realiza o login
     E confirma o endereco de entrega
-    E escolhe a forma de transporte
     Quando o pagamento for confirmado
-    Entao deve ser apresentado a mensagem "Your order has been placed successfully!"
+    Entao deve ser apresentado a mensagem "Congratulations! Your order has been confirmed!"
